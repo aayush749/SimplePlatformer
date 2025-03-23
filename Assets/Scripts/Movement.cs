@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private float maximumSpeed = 5f;
 
-    [SerializeField] private Animator animator;
+    private Animator animator;
 
     public float currentSpeed { get; private set; }
 
@@ -27,7 +28,14 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
+            transform.localScale = new Vector3(Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             transform.Translate(Vector3.right * currentSpeed * Time.deltaTime);
+            animator.SetBool("isRunning", true);
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.localScale = new Vector3(-Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.Translate(Vector3.left * currentSpeed * Time.deltaTime);
             animator.SetBool("isRunning", true);
         }
         else
