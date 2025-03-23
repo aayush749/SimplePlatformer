@@ -11,10 +11,13 @@ public class Movement : MonoBehaviour
 
     public float currentSpeed { get; private set; }
 
+    private Rigidbody2D rigidBody2D;
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        rigidBody2D = GetComponent<Rigidbody2D>();
         currentSpeed = maximumSpeed;
     }
 
@@ -29,19 +32,19 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.localScale = new Vector3(Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            transform.Translate(Vector3.right * currentSpeed * Time.deltaTime);
+            rigidBody2D.velocity = new Vector2(currentSpeed, rigidBody2D.velocity.y);
             animator.SetBool("isRunning", true);
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.localScale = new Vector3(-Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            transform.Translate(Vector3.left * currentSpeed * Time.deltaTime);
+            rigidBody2D.velocity = new Vector2(-currentSpeed, rigidBody2D.velocity.y);
             animator.SetBool("isRunning", true);
         }
         else
         {
             currentSpeed = 0;
-            transform.Translate(Vector3.right * currentSpeed);
+            rigidBody2D.velocity = new Vector2(currentSpeed, rigidBody2D.velocity.y);
             animator.SetBool("isRunning", false);
             animator.SetBool("isWalking", false);
         }
@@ -58,5 +61,8 @@ public class Movement : MonoBehaviour
             transform.Translate(Vector3.right * 0);
             animator.SetBool("isWalking", false);
         }
+
+        // Stop the rotation of the player
+        rigidBody2D.angularVelocity = 0;
     }
 }
