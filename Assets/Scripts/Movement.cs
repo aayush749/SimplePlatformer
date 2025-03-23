@@ -31,13 +31,23 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.localScale = new Vector3(Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(
+                Math.Abs(transform.localScale.x),
+                transform.localScale.y,
+                transform.localScale.z
+            );
+
             rigidBody2D.velocity = new Vector2(currentSpeed, rigidBody2D.velocity.y);
             animator.SetBool("isRunning", true);
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.localScale = new Vector3(-Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(
+                -Math.Abs(transform.localScale.x),
+                transform.localScale.y,
+                transform.localScale.z
+            );
+
             rigidBody2D.velocity = new Vector2(-currentSpeed, rigidBody2D.velocity.y);
             animator.SetBool("isRunning", true);
         }
@@ -58,7 +68,6 @@ public class Movement : MonoBehaviour
         else
         {
             currentSpeed = maximumSpeed;
-            transform.Translate(Vector3.right * 0);
             animator.SetBool("isWalking", false);
         }
 
